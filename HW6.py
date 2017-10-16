@@ -30,9 +30,19 @@ for tag in tags:
     needed_tag = tag.get('href', None)
     tags_lst.append(needed_tag)
 
-for i in range(0,count):    
-    print('retrieving: ', tags_lst[position])
-    position = position + 1
+for i in range(0,count):
+    soup = BeautifulSoup(html, 'html.parser')
+    tags = soup('a')
+    tags_lst = list()
+    for tag in tags:
+        needed_tag = tag.get('href', None)
+        tags_lst.append(needed_tag)    
+    print('retrieving: ', tags_lst[position - 1])
+    url = tags_lst[position - 1]
+        
+
+    html = urllib.request.urlopen(url, context=ctx).read()
+
     print(position)
     
     print(i)
