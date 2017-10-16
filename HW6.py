@@ -43,6 +43,4 @@ for i in range(0,count):
 
     html = urllib.request.urlopen(url, context=ctx).read()
 
-    print(position)
     
-    print(i)
