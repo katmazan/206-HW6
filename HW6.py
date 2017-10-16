@@ -1,4 +1,6 @@
-##KATARINA MAZANKA, KATMAZAN
+# To run this, you can install BeautifulSoup
+# https://pypi.python.org/pypi/beautifulsoup4
+
 # To run this, you can install BeautifulSoup
 # https://pypi.python.org/pypi/beautifulsoup4
 
@@ -6,8 +8,7 @@
 # http://www.py4e.com/code3/bs4.zip
 # and unzip it in the same directory as this file
 
-
-from urllib.request import urlopen
+import urllib.request, urllib.parse, urllib.error
 from bs4 import BeautifulSoup
 import ssl
 
@@ -17,22 +18,21 @@ ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
 url = input('Enter - ')
-html = urlopen(url, context=ctx).read()
+html = urllib.request.urlopen(url, context=ctx).read()
+soup = BeautifulSoup(html, 'html.parser')
+count = int(input('Enter count - '))
+position = int(input('Enter position - '))
 
-# html.parser is the HTML parser included in the standard Python 3 library.
-# information on other HTML parsers is here:
-# http://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-a-parser
-soup = BeautifulSoup(html, "html.parser")
-
-# Retrieve all of the span tags
-total = 0
-tags = soup('span')
+# Retrieve all of the anchor tags
+tags = soup('a')
+tags_lst = list()
 for tag in tags:
-    # Look at the parts of a tag
-    print('TAG:', tag)
-    print('URL:', tag.get('href', None))
-    print('Contents:', tag.contents[0])
-    print('Attrs:', tag.attrs)
-    total = int(tag.contents[0]) + total
-    print(total)
+    needed_tag = tag.get('href', None)
+    tags_lst.append(needed_tag)
 
+for i in range(0,count):    
+    print('retrieving: ', tags_lst[position])
+    position = position + 1
+    print(position)
+    
+    print(i)
